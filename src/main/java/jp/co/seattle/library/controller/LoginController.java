@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.UserInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.UsersService;
 
@@ -45,12 +46,18 @@ public class LoginController {
 
         // TODO 下記のコメントアウトを外してサービスクラスを使用してください。
         //        UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
+    	          UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
+    	          
 
         // TODO パスワードとメールアドレスの組み合わせ存在チェック実装
-
+        if (selectedUserInfo == null) {
+        	model.addAttribute("errorMessage", "ログインできません。");
+        	return "login";
+        	
+        } else {
         // 本の情報を取得して画面側に渡す
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
-
+           model.addAttribute("bookList", booksService.getBookList());
+           return "home";
+        }
     }
 }
