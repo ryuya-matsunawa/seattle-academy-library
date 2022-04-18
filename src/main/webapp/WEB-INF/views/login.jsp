@@ -27,9 +27,6 @@
                         <div class="error">${errorMessage}</div>
                     </c:if>
                     
-                    <c:if test="${!empty errorPassword }">
-                        <div class="error">${errorPassword}</div>
-                    </c:if>    
                 </form>
             </div>
             <div class="authorization_navi">

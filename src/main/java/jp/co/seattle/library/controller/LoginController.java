@@ -49,10 +49,14 @@ public class LoginController {
 
         // TODO パスワードとメールアドレスの組み合わせ存在チェック実装
               if (selectedUserInfo == null) {
-            	  model.addAttribute("errorPassword","一致しません");
+            	  model.addAttribute("errorMessage","一致しません");
             	  return "login";
             			  
-              }else
+              }else {
+            	  
+              }
+            
+         
             	  
             	  model.addAttribute("bookList", booksService.getBookList());
               return "home";
