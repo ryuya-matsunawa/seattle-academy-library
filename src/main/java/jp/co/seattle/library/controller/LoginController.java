@@ -54,13 +54,12 @@ public class LoginController {
             			  
               }else {
             	  
+            	  model.addAttribute("bookList", booksService.getBookList());
+                  return "home";
               }
             
          
-            	  
-            	  model.addAttribute("bookList", booksService.getBookList());
-              return "home";
-            	
+             	
 
     }
 }
