@@ -47,7 +47,7 @@
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>
-                                <li class="book_author">${bookInfo.author}</li>
+                                <li class="book_author">(著)${bookInfo.author}</li>
                                 <li class="book_publisher">出版社：${bookInfo.publisher}</li>
                                 <li class="book_publish_date">出版日：${bookInfo.publishDate}</li>
                             </ul>
