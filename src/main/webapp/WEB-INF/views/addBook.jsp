@@ -41,6 +41,12 @@
                 </div>
                 <div class="content_right">
                     <div>
+                        <c:if test="${!empty errorMessage}">
+                            <div class="error">
+                                <c:forEach var="error" items="${errorMessage}"> ${error}
+                            </c:forEach>
+                            </div>
+                        </c:if>
                         <span>書籍名</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookInfo}">
                             <input type="text" name="title" value="${bookInfo.title}">
@@ -67,14 +73,34 @@
                             <input type="text" name="publisher">
                         </c:if>
                     </div>
-                    <input type="hidden" id="bookId" name="bookId" value="${bookInfo.bookId}">
+                    <div>
+                        <span>出版日</span><span class="care care2">必須</span>
+                        <c:if test="${!empty bookInfo}">
+                            <input type="text" name="publishDate" value="${bookInfo.publishDate}">
+                        </c:if>
+                        <c:if test="${empty bookInfo}">
+                            <input type="text" name="publishDate" placeholder="YYYYMMDD">
+                        </c:if>
+                    </div>
+                    <div>
+                        <span>ISBN</span><span class="care care1">任意</span>
+                        <div class="book_isbn">
+                            <input type="text" name="isbn" value="${bookInfo.isbn}">
+                        </div>
+                        <div>
+                            <span>説明文</span><span class="care care1">任意</span>
+                            <div class="book_explain">
+                                <input type="text" name="explain">
+                            </div>
+                            <input type="hidden" id="bookId" name="bookId" value="${bookInfo.bookId}">
+                        </div>
+                    </div>
+                    <div class="addBookBtn_box">
+                        <button type="submit" id="add-btn" class="btn_addBook">登録</button>
+                    </div>
                 </div>
             </div>
-            <div class="addBookBtn_box">
-                <button type="submit" id="add-btn" class="btn_addBook">登録</button>
-            </div>
         </form>
-        </div>
     </main>
 </body>
 </html>
