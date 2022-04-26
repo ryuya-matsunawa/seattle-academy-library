@@ -31,9 +31,10 @@ public class AddBooksController {
 
 	@Autowired
 	private ThumbnailService thumbnailService;
-
+	
+	//ホームから、書籍情報登録画面に遷移
 	@RequestMapping(value = "/addBook", method = RequestMethod.GET)
-	// value＝actionで指定したパラメータ
+	// value＝actionで指定したパラメータ(actionはjspのもの)
 	// RequestParamでname属性を取得
 	public String login(Model model) {
 		return "addBook";
@@ -52,9 +53,14 @@ public class AddBooksController {
 	 */
 	@Transactional
 	@RequestMapping(value = "/insertBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
-	public String insertBook(Locale locale, @RequestParam("title") String title, @RequestParam("author") String author,
-			@RequestParam("publisher") String publisher, @RequestParam("publishDate") String publishDate,
-			@RequestParam("isbn") String isbn, @RequestParam("explain") String explain,
+	
+	public String insertBook(Locale locale, 
+			@RequestParam("title") String title, 
+			@RequestParam("author") String author,
+			@RequestParam("publisher") String publisher, 
+			@RequestParam("publishDate") String publishDate,
+			@RequestParam("isbn") String isbn, 
+			@RequestParam("explain") String explain,
 			@RequestParam("thumbnail") MultipartFile file, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
@@ -66,8 +72,6 @@ public class AddBooksController {
 		bookInfo.setPublishDate(publishDate);
 		bookInfo.setIsbn(isbn);
 		bookInfo.setExplain(explain);
-
-		System.out.println(publishDate);
 
 		// クライアントのファイルシステムにある元のファイル名を設定する
 		String thumbnail = file.getOriginalFilename();
@@ -94,7 +98,7 @@ public class AddBooksController {
 		List<String> errorMessages = new ArrayList<String>();
 
 		// 必須項目チェック
-		if ((title.isEmpty()) || (author.isEmpty()) || (publisher.isEmpty()) || (publishDate.isEmpty())) {
+		if (title.isEmpty() || author.isEmpty() || publisher.isEmpty() || publishDate.isEmpty()) {
 			errorMessages.add("必須項目を入力してください<br><br>");
 		}
 
@@ -104,17 +108,19 @@ public class AddBooksController {
 		}
 
 		// isbn桁数チェック
-		Boolean isbn1 = !isbn.matches("^\\d{10}$") && !isbn.matches("^\\d{13}$");
-		if (!isbn.isEmpty() && isbn1) {
+		Boolean digitNumberCheck = !isbn.matches("^\\d{10}$") && !isbn.matches("^\\d{13}$");
+		if (!isbn.isEmpty() && digitNumberCheck) {
 			errorMessages.add("ISBNの桁数または半角数字が正しくありません");
 		}
 
 		if ((errorMessages == null) || (errorMessages.size() == 0)) {
+			
 			// 書籍情報を新規登録する
 			booksService.registBook(bookInfo);
 			model.addAttribute("resultMessage", "登録完了");
+			
 			// TODO 登録した書籍の詳細情報を表示するように実装
-			model.addAttribute("bookDetailsInfo", bookInfo);
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo());
 			return "details";
 
 		} else {
