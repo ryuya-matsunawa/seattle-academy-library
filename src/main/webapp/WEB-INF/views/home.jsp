@@ -33,8 +33,8 @@
             </c:if>
             <div>
                 <div class="booklist">
-                    <c:forEach var="bookInfo" items="${bookList}">
-                        <div class="books">
+                    <c:forEach var="bookInfo" items="${bookList}">                       
+                     <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                 <a href="javascript:void(0)" onclick="this.parentNode.submit();">
                                  	<c:if test="${bookInfo.thumbnail == 'null'}">
@@ -49,12 +49,17 @@
                                 <li class="book_title">${bookInfo.title}</li>
                                  <li class="book_author">${bookInfo.author}(著)<li>
                                  <li class="book_publisher">出版社:${bookInfo.publisher}</li>
-                                  <li class="book_publish_Date">出版日:${bookInfo.publishDate}</li>
+                                  <li class="book_publish_Date">出版日:${bookInfo.publishDate}</li>                                
                             </ul>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
+                             </div> 
+                          </c:forEach>  
+                         </div> 
+                   </div>
+                      
+                     
+                        
+                          
+           
         </div>
     </main>
 </body>
