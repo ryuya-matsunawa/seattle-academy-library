@@ -110,7 +110,7 @@ public class AddBooksController {
 
 			booksService.registBook(bookInfo);
 			int bookId = booksService.getMaxbookId();
-			booksService.getBookInfo(bookId);
+			
 			BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
 
 			model.addAttribute("bookDetailsInfo", bookDetailsInfo);
