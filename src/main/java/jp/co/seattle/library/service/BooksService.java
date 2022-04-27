@@ -33,40 +33,51 @@ public class BooksService {
 
         // TODO 取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
-                "select id,title,author,publisher,publish_date, thumbnail_url from books order by title asc",
+                "select id,title,author,publisher,publish_date, thumbnail_url, isbn,explain from books order by title asc",
                 new BookInfoRowMapper());
 
         return getedBookList;
     }
-
-    /**
-     * 書籍IDに紐づく書籍詳細情報を取得する
-     *
-     * @param bookId 書籍ID
-     * @return 書籍情報
-     */
+    
     public BookDetailsInfo getBookInfo(int bookId) {
 
         // JSPに渡すデータを設定する
-        String sql = "SELECT * FROM books where id ="
-                + bookId;
+        String sql = "select * from books where id =" + bookId;
 
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
         return bookDetailsInfo;
     }
+   
+    public BookDetailsInfo getLatestBookInfo() {
 
-    /**
+        // JSPに渡すデータを設定する
+        String sql = "select * from books where id = (select max(id)from books);"; 
+
+        BookDetailsInfo latestBookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+
+        return latestBookDetailsInfo;
+    }
+
+    
+	
+
+	
+
+	/**
      * 書籍を登録する
      *
      * @param bookInfo 書籍情報
      */
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
-                + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+        String sql = "INSERT INTO books (title, author,publisher,publish_date,thumbnail_name,thumbnail_url,isbn,explain,reg_date,upd_date) VALUES ('"
+                + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','" 
+                + bookInfo.getPublishDate() + "','"
                 + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
+                + bookInfo.getThumbnailUrl() + "','"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getExplain() + "'," 
                 + "now(),"
                 + "now())";
 
@@ -74,11 +85,19 @@ public class BooksService {
         
         
        }
+    
+   
+
     public void deleteBook(Integer bookId) {
     	
 		String sql = "DELETE FROM books WHERE id = " + bookId +";";
 		jdbcTemplate.update(sql);
     }
+
+
+
+
+	
 
 	
 	
