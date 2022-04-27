@@ -76,7 +76,7 @@ public class BooksService {
                 + bookInfo.getPublishDate() + "','"
                 + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getThumbnailUrl() + "','"
-                + bookInfo.getISBN() + "','"
+                + bookInfo.getIsbn() + "','"
                 + bookInfo.getExplain() + "'," 
                 + "now(),"
                 + "now())";

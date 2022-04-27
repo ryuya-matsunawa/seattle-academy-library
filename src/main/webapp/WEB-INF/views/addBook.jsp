@@ -88,10 +88,10 @@
                         <div>
                         <span>ISBN</span><span class="care care1">任意</span>
                         <c:if test="${!empty bookInfo}">
-                            <input type="text" name="ISBN" value="${bookInfo.ISBN}">
+                            <input type="text" name="isbn" value="${bookInfo.isbn}">
                         </c:if>
                         <c:if test="${empty bookInfo}">
-                            <input type="text" name="ISBN">
+                            <input type="text" name="isbn">
                         </c:if>
                     </div>
                         <div>

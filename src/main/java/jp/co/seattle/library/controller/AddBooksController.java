@@ -57,7 +57,7 @@ public class AddBooksController {
             @RequestParam("author") String author,
             @RequestParam("publisher") String publisher,
             @RequestParam("publish_date") String publishDate,
-            @RequestParam("ISBN") String ISBN,
+            @RequestParam("isbn") String isbn,
             @RequestParam("explain") String explain,
             
             @RequestParam("thumbnail") MultipartFile file,
@@ -70,7 +70,7 @@ public class AddBooksController {
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
         bookInfo.setPublishDate(publishDate);
-        bookInfo.setISBN(ISBN);
+        bookInfo.setIsbn(isbn);
         bookInfo.setExplain(explain);
 
         // クライアントのファイルシステムにある元のファイル名を設定する
@@ -107,15 +107,15 @@ public class AddBooksController {
         }
       
        
-       
-        if(!(bookInfo.getPublishDate().length() >= 8 && bookInfo.getPublishDate().matches("^[0-9a-zA-Z]+$"))) {
+        if(!(bookInfo.getPublishDate().length() == 8 && bookInfo.getPublishDate().matches("^[0-9]+$"))) {
+        
 
         	list.add("出版日は半角数字のYYYYMMDD形式で入力してください");       		
 
         }
 
         //ISBN
-        if (!(bookInfo.getISBN().length()== 10 || bookInfo.getISBN().length()== 13 || bookInfo.getISBN().length()== 0 )) {
+        if (!(bookInfo.getIsbn().length()== 10 || bookInfo.getIsbn().length()== 13 || bookInfo.getIsbn().length()== 0 )) {
 
     		list.add("ISBNの桁数または半角数字が正しくありません");       		
 
@@ -141,3 +141,4 @@ public class AddBooksController {
     }
 
 }
+

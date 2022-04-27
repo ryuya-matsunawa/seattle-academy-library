@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <span>ISBN</span>
-                    <p>${bookDetailsInfo.ISBN}</p>
+                    <p>${bookDetailsInfo.isbn}</p>
                 </div>
                 <div>
                     <span>説明文</span>
