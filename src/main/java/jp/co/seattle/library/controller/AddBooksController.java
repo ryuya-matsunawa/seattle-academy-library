@@ -56,7 +56,6 @@ public class AddBooksController {
 			@RequestParam("description") String description, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-		System.out.println("xxx");
 		// パラメータで受け取った書籍情報をDtoに格納する。
 		BookDetailsInfo bookInfo = new BookDetailsInfo();
 		bookInfo.setTitle(title);
@@ -65,8 +64,6 @@ public class AddBooksController {
 		bookInfo.setPublishDate(publishDate);
 		bookInfo.setIsbn(isbn);
 		bookInfo.setDescription(description);
-
-		System.out.println("zzz");
 
 		// クライアントのファイルシステムにある元のファイル名を設定する
 		String thumbnail = file.getOriginalFilename();
@@ -110,7 +107,7 @@ public class AddBooksController {
 
 			booksService.registBook(bookInfo);
 			int bookId = booksService.getMaxbookId();
-			
+
 			BookDetailsInfo bookDetailsInfo = booksService.getBookInfo(bookId);
 
 			model.addAttribute("bookDetailsInfo", bookDetailsInfo);
