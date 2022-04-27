@@ -55,6 +55,11 @@ public class BooksService {
 		return bookDetailsInfo;
 	}
 	
+	/**
+	 * 書籍IDに紐づく書籍詳細情報を引数なしで取得する
+	 *
+	 * @return 書籍情報
+	 */
 	public BookDetailsInfo getBookInfo() {
 
 		// JSPに渡すデータを設定する
@@ -80,7 +85,11 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-	
+	/**
+	 * 書籍を削除する
+	 *
+	 * @param bookId 書籍Id
+	 */
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id =" + bookId;

@@ -19,6 +19,7 @@ import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.ThumbnailService;
 
+
 /**
  * Handles requests for the application home page.
  */
@@ -31,8 +32,8 @@ public class AddBooksController {
 
 	@Autowired
 	private ThumbnailService thumbnailService;
-	
-	//ホームから、書籍情報登録画面に遷移
+
+	// ホームから、書籍情報登録画面に遷移
 	@RequestMapping(value = "/addBook", method = RequestMethod.GET)
 	// value＝actionで指定したパラメータ(actionはjspのもの)
 	// RequestParamでname属性を取得
@@ -53,14 +54,17 @@ public class AddBooksController {
 	 */
 	@Transactional
 	@RequestMapping(value = "/insertBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
-	
-	public String insertBook(Locale locale, 
-			@RequestParam("title") String title, 
-			@RequestParam("author") String author,
-			@RequestParam("publisher") String publisher, 
-			@RequestParam("publishDate") String publishDate,
-			@RequestParam("isbn") String isbn, 
-			@RequestParam("explain") String explain,
+
+	/**
+	 *
+	 * 書籍IDに紐づく書籍詳細情報を取得する
+	 * 
+	 * @param bookId 書籍ID
+	 * @return 書籍情報
+	 */
+	public String insertBook(Locale locale, @RequestParam("title") String title, @RequestParam("author") String author,
+			@RequestParam("publisher") String publisher, @RequestParam("publishDate") String publishDate,
+			@RequestParam("isbn") String isbn, @RequestParam("explain") String explain,
 			@RequestParam("thumbnail") MultipartFile file, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
@@ -114,11 +118,11 @@ public class AddBooksController {
 		}
 
 		if ((errorMessages == null) || (errorMessages.size() == 0)) {
-			
+
 			// 書籍情報を新規登録する
 			booksService.registBook(bookInfo);
 			model.addAttribute("resultMessage", "登録完了");
-			
+
 			// TODO 登録した書籍の詳細情報を表示するように実装
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo());
 			return "details";
