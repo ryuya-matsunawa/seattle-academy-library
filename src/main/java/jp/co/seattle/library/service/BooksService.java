@@ -54,6 +54,22 @@ public class BooksService {
 
 		return bookDetailsInfo;
 	}
+	
+	/**
+	 * 書籍IDに紐づく書籍詳細情報を引数なしで取得する
+	 *
+	 * @return 書籍情報
+	 */
+	public BookDetailsInfo getBookInfo() {
+
+		// JSPに渡すデータを設定する
+		String sql = "SELECT * FROM books where id = (SELECT MAX(id) FROM books)";
+
+		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+
+		return bookDetailsInfo;
+	}
+	
 
 	/**
 	 * 書籍を登録する
@@ -62,14 +78,18 @@ public class BooksService {
 	 */
 	public void registBook(BookDetailsInfo bookInfo) {
 
-		String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+		String sql = "INSERT INTO books (title,author,publisher,publish_date,isbn,explain,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','"+ bookInfo.getExplain() + "','"
 				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "'," + "now()," + "now())";
-
 		jdbcTemplate.update(sql);
 	}
 
-	
+	/**
+	 * 書籍を削除する
+	 *
+	 * @param bookId 書籍Id
+	 */
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id =" + bookId;
