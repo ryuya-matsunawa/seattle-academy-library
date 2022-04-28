@@ -97,7 +97,20 @@ public class BooksService {
 
 
 
-	
+    public void updateBook(BookDetailsInfo bookInfo, int id) {
+
+ 		String sql = "update books set title = " + "'" + bookInfo.getTitle() + "', " 
+ 								+ "author = '"  + bookInfo.getAuthor() + "', " 
+ 								+ "publisher = '"  + bookInfo.getPublisher() + "', " 
+ 								+ "thumbnail_name = '"  + bookInfo.getThumbnailName() + "', " 
+ 								+ "thumbnail_url = '"  + bookInfo.getThumbnailUrl() + "', " 
+ 								+ "publish_date = '"  + bookInfo.getPublishDate() + "', " 
+ 								+ "isbn = '"  + bookInfo.getIsbn() + "', " 
+ 								+ "explain = '"  + bookInfo.getExplain() + "' where id = " + id;
+
+ 		jdbcTemplate.update(sql);
+ 	}
+
 
 	
 	
