@@ -33,7 +33,13 @@ public class EditBookController {
 	 @Autowired
 	    private ThumbnailService thumbnailService;
 	
-	
+	 /**
+	 	 * 書籍情報を登録する
+	 	 * @param locale ロケール情報
+	 	 * @param bookId bookId
+	    * @param model モデル
+	    * @return 遷移先画面
+	 	 */
 	
 	
 	 @RequestMapping(value = "/editBook", method = RequestMethod.POST)
@@ -45,6 +51,20 @@ public class EditBookController {
 		
 	}
 	
+	 /**
+	     * 書籍情報を登録する
+	     * @param locale ロケール情報
+	     * @param title 書籍名
+	     * @param author 著者名
+	     * @param publisher 出版社
+	     * @param publish_date 出版日
+	     * @param isbn 
+	     * @param explain 説明文
+	     * @param file サムネイルファイル
+	     * @param model モデル
+	     * @return 遷移先画面
+	     */
+	 
 	 
 	 @Transactional
 	    @RequestMapping(value = "/updateBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")

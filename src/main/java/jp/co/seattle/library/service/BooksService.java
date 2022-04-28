@@ -95,7 +95,11 @@ public class BooksService {
     }
 
 
-
+    /**
+ 	 * 書籍を更新する
+ 	 * @param id 書籍id
+ 	 * @param bookInfo 書籍情報
+ 	 **/
 
     public void updateBook(BookDetailsInfo bookInfo, int id) {
 
