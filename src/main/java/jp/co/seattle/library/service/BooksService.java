@@ -87,7 +87,7 @@ public class BooksService {
 	 * @param bookId      書籍ID
 	 * @return 遷移先画面
 	 */
-	
+
 	public void updateBook(BookDetailsInfo bookInfo) {
 		String sql;
 		if (bookInfo.getThumbnailUrl() == null) {
@@ -106,6 +106,13 @@ public class BooksService {
 		}
 	}
 
+	/**
+	 * 
+	 * 書籍IDに紐づく書籍詳細情報を取得する
+	 * 
+	 * @param bookId 書籍ID
+	 * @return
+	 */
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id =" + bookId;
@@ -113,6 +120,13 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
+	/**
+	 * 
+	 * 書籍IDに紐づく書籍詳細情報を取得する
+	 * 
+	 * @param
+	 * @return bookId
+	 */
 	public int getMaxbookId() {
 
 		String sql = "SELECT max(id) FROM books";
