@@ -35,9 +35,9 @@
             <div class="content_left">
                 <span>書籍の画像</span>
                 <div class="book_thumnail">
-                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${empty bookDetailsInfo.thumbnailUrl}">
+                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> <c:if test="${bookDetailsInfo.thumbnailUrl == 'null'}">
                             <img class="book_noimg" src="resources/img/noImg.png">
-                        </c:if> <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
+                        </c:if> <c:if test="${bookDetailsInfo.thumbnailUrl != 'null'}">
                             <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
