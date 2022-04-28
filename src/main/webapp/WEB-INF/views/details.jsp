@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <span>ISBN</span>
-                    <p>${bookDetailsInfo.ISBN}</p>
+                    <p>${bookDetailsInfo.isbn}</p>
                 </div>
                 <div>
                     <span>説明文</span>
@@ -79,7 +79,7 @@
                  <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_returnBook">返す</button>
              </form>
 
-             <form method="post" action="">
+             <form method="post" action="<%=request.getContextPath()%>/editBook">
                  <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
              </form>
             <form method="post" action="deleteBook">
