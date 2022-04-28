@@ -71,8 +71,23 @@ public class BooksService {
 
 	}
 
-	// 本の編集内容を更新
-	// updateBook
+	/**
+	 * 
+	 * 書籍情報を更新する
+	 * 
+	 * @param locale      ローケル情報
+	 * @param title       書籍名
+	 * @param author      著者名
+	 * @param publisher   出版社
+	 * @param publishDate 出版日
+	 * @param thumbnail   サムネイル
+	 * @palam model モデル
+	 * @param isbn        コード
+	 * @param description 説明文
+	 * @param bookId      書籍ID
+	 * @return 遷移先画面
+	 */
+	
 	public void updateBook(BookDetailsInfo bookInfo) {
 		String sql;
 		if (bookInfo.getThumbnailUrl() == null) {
@@ -80,18 +95,17 @@ public class BooksService {
 					+ "' , publisher ='" + bookInfo.getPublisher() + "', publish_date ='" + bookInfo.getPublishDate()
 					+ "' , upd_date = 'now()'" + ",isbn = '" + bookInfo.getIsbn() + "', description= '"
 					+ bookInfo.getDescription() + "' where id =" + bookInfo.getBookId() + ";";
-		} else {
+
 			sql = "update books set title ='" + bookInfo.getTitle() + "', author ='" + bookInfo.getAuthor()
 					+ "' , publisher ='" + bookInfo.getPublisher() + "', publish_date ='" + bookInfo.getPublishDate()
 					+ "' , thumbnail_url ='" + bookInfo.getThumbnailUrl() + "', thumbnail_name ='"
 					+ bookInfo.getThumbnailName() + "' , upd_date = 'now()'" + ",isbn = '" + bookInfo.getIsbn()
 					+ "', description = '" + bookInfo.getDescription() + "' where id =" + bookInfo.getBookId() + ";";
-		}
 
-		jdbcTemplate.update(sql);
+			jdbcTemplate.update(sql);
+		}
 	}
 
-	// 書籍を削除
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id =" + bookId;

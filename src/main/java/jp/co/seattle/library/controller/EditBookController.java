@@ -31,6 +31,15 @@ public class EditBookController {
 	@Autowired
 	private ThumbnailService thumbnailService;
 
+	/**
+	 * 
+	 * 書籍情報を更新する
+	 * 
+	 * @param locale ローケル情報
+	 * @palam model モデル
+	 * @param bookId 書籍ID
+	 * @return 遷移先画面
+	 */
 	@RequestMapping(value = "/editBook", method = RequestMethod.POST) // value＝actionで指定したパラメータ
 	// RequestParamでname属性を取得
 	public String editBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
@@ -41,25 +50,24 @@ public class EditBookController {
 	/**
 	 * 書籍情報を登録する
 	 * 
-	 * @param locale    ロケール情報
-	 * @param title     書籍名
-	 * @param author    著者名
-	 * @param publisher 出版社
-	 * @param file      サムネイルファイル
-	 * @param model     モデル
+	 * @param locale      ロケール情報
+	 * @param bookId      書籍ID
+	 * @param title       書籍名
+	 * @param author      著者名
+	 * @param publisher   出版社
+	 * @param publishDate 出版日
+	 * @param thumbnail   サムネイル
+	 * @param isbn        コード
+	 * @param model       モデル
 	 * @return 遷移先画面
 	 */
 	@Transactional
 	@RequestMapping(value = "/updateBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
-	public String insertBook(Locale locale,  @RequestParam("bookId") int bookId,@RequestParam("title") String title, @RequestParam("author") String author,
-			@RequestParam("publisher") String publisher, @RequestParam("thumbnail") MultipartFile file,
-			@RequestParam("publishDate") String publishDate, @RequestParam("isbn") String isbn,
-			@RequestParam("description") String description, Model model) {
+	public String insertBook(Locale locale, @RequestParam("bookId") int bookId, @RequestParam("title") String title,
+			@RequestParam("author") String author, @RequestParam("publisher") String publisher,
+			@RequestParam("thumbnail") MultipartFile file, @RequestParam("publishDate") String publishDate,
+			@RequestParam("isbn") String isbn, @RequestParam("description") String description, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
-	
-
-			
-		
 
 		// パラメータで受け取った書籍情報をDtoに格納する。
 		BookDetailsInfo bookInfo = new BookDetailsInfo();
@@ -111,11 +119,11 @@ public class EditBookController {
 		if (errorMessages.isEmpty()) {
 
 			booksService.updateBook(bookInfo);
-			
+
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		} else {
-			
+
 			model.addAttribute("errorMessages", errorMessages);
 			model.addAttribute("bookDetailsInfo", bookInfo);
 			return "editBook";
