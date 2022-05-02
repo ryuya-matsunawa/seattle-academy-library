@@ -54,7 +54,7 @@ public class BooksService {
 
 		return bookDetailsInfo;
 	}
-	
+
 	/**
 	 * 書籍IDに紐づく書籍詳細情報を引数なしで取得する
 	 *
@@ -69,7 +69,6 @@ public class BooksService {
 
 		return bookDetailsInfo;
 	}
-	
 
 	/**
 	 * 書籍を登録する
@@ -80,7 +79,7 @@ public class BooksService {
 
 		String sql = "INSERT INTO books (title,author,publisher,publish_date,isbn,explain,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
-				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','"+ bookInfo.getExplain() + "','"
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getExplain() + "','"
 				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "'," + "now()," + "now())";
 		jdbcTemplate.update(sql);
 	}
@@ -93,11 +92,25 @@ public class BooksService {
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id =" + bookId;
-		
-		jdbcTemplate.update(sql);
-		
-		
-	}		
-		
-}
 
+		jdbcTemplate.update(sql);
+
+	}
+
+	/**
+	 * 書籍を更新する
+	 *
+	 * @param bookId 書籍Id
+	 */
+	public void updateBook(BookDetailsInfo bookInfo) {
+
+		String sql = "UPDATE books SET (title,author,publisher,publish_date,isbn,explain,thumbnail_name,thumbnail_url,upd_date) = ('"
+				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getExplain() + "','"
+				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "'," + "now()) WHERE id="
+				+ bookInfo.getBookId();
+
+		jdbcTemplate.update(sql);
+
+	}
+}
