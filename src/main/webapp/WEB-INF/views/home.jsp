@@ -27,17 +27,19 @@
     <main>
         <h1>Home</h1>
         <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
+         <a href="<%=request.getContextPath()%>/bulkRegist" class="btn_bulk_book">書籍の一括登録</a>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
             </c:if>
-            <div>
-                <div class="booklist">
+            
+         
+             <div class="booklist">
                     <c:forEach var="bookInfo" items="${bookList}">                       
                      <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                 <a href="javascript:void(0)" onclick="this.parentNode.submit();">
-                                 	<c:if test="${bookInfo.thumbnail == 'null'}">
+                                    <c:if test="${bookInfo.thumbnail == 'null'}">
                                         <img class="book_noimg" src="resources/img/noImg.png">
                                     </c:if>
                                     <c:if test="${bookInfo.thumbnail != 'null'}">
@@ -55,7 +57,8 @@
                           </c:forEach>  
                          </div> 
                    </div>
-                      
+        
+                
                      
                         
                           
