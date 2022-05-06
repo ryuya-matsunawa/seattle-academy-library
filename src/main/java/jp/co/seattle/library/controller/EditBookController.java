@@ -129,11 +129,11 @@ public class EditBookController {
 			model.addAttribute("resultMessage", "更新完了");
 
 			// 更新した書籍の詳細情報を表示するように実装
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo());
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 
 		} else {
-			model.addAttribute("bookDetailsInfo", bookInfo);
+			model.addAttribute("bookDetailInfo", bookInfo);
 			model.addAttribute("errorMessage", errorMessages);
 			return "editbook";
 
