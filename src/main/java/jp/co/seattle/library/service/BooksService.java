@@ -64,9 +64,8 @@ public class BooksService {
 
 		String sql = "INSERT INTO books (title, author, publisher, publish_date, isbn, description, reg_date, upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
-				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "'," 
-				+ "now(),"
-				+ "now())";
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "',"
+				+ "now()," + "now())";
 
 		jdbcTemplate.update(sql);
 
@@ -138,11 +137,11 @@ public class BooksService {
 	public void bulkRegist(BookDetailsInfo bookInfo) {
 		String sql = "INSERT INTO books (title, author, publisher, publish_date, isbn, description, reg_date, upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
-				+ bookInfo.getPublishDate() + "','"  + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "'," + "now(),"
-						+ "now())";
-		
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getDescription() + "',"
+				+ "now()," + "now())";
+
 		System.out.println(sql);
-		
+
 		jdbcTemplate.update(sql);
 
 	}
@@ -151,4 +150,20 @@ public class BooksService {
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
+
+	// 書籍の貸出
+	public void rentBook(int bookId) {
+		String sql = "insert into rentbooks (book_id) select " + bookId + " where NOT EXISTS (select book_id from rentbooks where book_id=" + bookId + ")";
+		jdbcTemplate.update(sql);
+	}
+		
+		public int count() {
+        String sql = "select count (*) from rentbooks";
+		
+		return jdbcTemplate.queryForObject(sql, int.class);
+	
+		}
+		
 }
+
+	
