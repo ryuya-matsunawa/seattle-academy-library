@@ -113,4 +113,20 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 
 	}
+
+
+	/**
+	 * 書籍を一括登録する
+	 *
+	 * @param bookInfo 書籍情報
+	 */
+	public void bulkregistBook(BookDetailsInfo bookInfo) {
+	
+		String sql = "INSERT INTO books (title,author,publisher,publish_date,isbn,explain,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getExplain() + "','"
+				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "'," + "now()," + "now())";
+		
+		jdbcTemplate.update(sql);
+	}
 }
