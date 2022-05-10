@@ -68,7 +68,7 @@ public class BulkRegistBooksController {
 			int lineCount = 0;
 
 			while ((inputValue = br.readLine()) != null) {
-				final String[] inputValues = inputValue.split(",", -1);
+				String[] inputValues = inputValue.split(",", -1);
 				BookDetailsInfo bookInfo = new BookDetailsInfo();
 				
 				lineCount++;
