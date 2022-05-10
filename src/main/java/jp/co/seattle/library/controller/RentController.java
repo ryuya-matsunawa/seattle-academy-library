@@ -43,7 +43,7 @@ public class RentController {
 	 */
 	@Transactional
 	@RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-	public String rentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+	public String deleteRentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
 		
