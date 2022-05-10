@@ -146,10 +146,8 @@ public class BooksService {
 
 	}
 
-	public Boolean checkBulkValidation(BookDetailsInfo bookInfo) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
+
+		
 
 	// 書籍の貸出
 	public void rentBook(int bookId) {
@@ -162,6 +160,16 @@ public class BooksService {
 		
 		return jdbcTemplate.queryForObject(sql, int.class);
 	
+		}
+		// 書籍の返却
+		public void returnBook(int bookId) {
+			String sql = "DELETE FROM rentbooks WHERE book_id=" + bookId;
+			jdbcTemplate.update(sql);
+		
+		}
+		public int size(int bookId) {
+	        String sql = "select count (*) from rentbooks WHERE book_id=" + bookId;
+	        return jdbcTemplate.queryForObject(sql, int.class);
 		}
 		
 }
