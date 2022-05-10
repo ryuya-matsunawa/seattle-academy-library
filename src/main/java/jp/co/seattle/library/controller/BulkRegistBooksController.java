@@ -32,15 +32,26 @@ public class BulkRegistBooksController {
 	@Autowired
 	private BooksService booksService;
 
-	// ホームから、一括登録画面に遷移
+	/**
+	 * ホームから、一括登録画面に遷移
+	 * 
+	 * @return 遷移先画面
+	 */
 	@RequestMapping(value = "/bulkRegistBooks", method = RequestMethod.GET)
 	// value＝actionで指定したパラメータ(actionはjspのもの)
 	// RequestParamでname属性を取得
 	public String bulkRegistBooks(Model model) {
 		return "bulkRegistBooks";
 	}
-
-	// CSVファイルを受け取ってDBに登録する
+	
+	/**
+	 * CSVファイルを受け取ってDBに登録
+	 * 
+	 * @param locale    ロケール情報
+	 * @param file      サムネイルファイル
+	 * @param model     モデル
+	 * @return 遷移先画面
+	 */
 	@Transactional
 	@RequestMapping(value = "/bulkRegistBook", method = RequestMethod.POST)
 
@@ -53,20 +64,13 @@ public class BulkRegistBooksController {
 				new InputStreamReader(uploadFile.getInputStream(), StandardCharsets.UTF_8))) {
 
 			String inputValue;
-			// わかってない
+			
 			int lineCount = 0;
 
 			while ((inputValue = br.readLine()) != null) {
-				final String[] inputValues = inputValue.split(",", -1);
-
+				String[] inputValues = inputValue.split(",", -1);
 				BookDetailsInfo bookInfo = new BookDetailsInfo();
-				bookInfo.setTitle(inputValues[0]);
-				bookInfo.setAuthor(inputValues[1]);
-				bookInfo.setPublisher(inputValues[2]);
-				bookInfo.setPublishDate(inputValues[3]);
-				bookInfo.setIsbn(inputValues[4]);
-
-				// なんかいるらしい
+				
 				lineCount++;
 
 				// TODO バリデーションチェック
@@ -84,8 +88,15 @@ public class BulkRegistBooksController {
 				if (mustCheck || dateCheck || isbnCheck) {
 					bulkerrorMessages.add(lineCount + "行目の書籍登録でエラーが起きました。");
 
-					// エラーがない
+				// エラーがない
 				} else {
+					
+					bookInfo.setTitle(inputValues[0]);
+					bookInfo.setAuthor(inputValues[1]);
+					bookInfo.setPublisher(inputValues[2]);
+					bookInfo.setPublishDate(inputValues[3]);
+					bookInfo.setIsbn(inputValues[4]);
+					
 					bulkRegistBookList.add(bookInfo);
 				}
 			}
@@ -93,11 +104,6 @@ public class BulkRegistBooksController {
 		// なんらかのエラーでファイルが読み込めなかった場合、エラー文を表示し、書籍一括画面に戻る
 		} catch (IOException e) {
 			throw new RuntimeException("ファイルが読み込めません", e);
-		}
-
-		//ファイルが選択されずに、ボタンが押された時
-		if(uploadFile.isEmpty()) {
-			bulkerrorMessages.add("ファイルが選択されていません。");
 		}
 		
 		// CSVファイルにデータがあるかどうか
