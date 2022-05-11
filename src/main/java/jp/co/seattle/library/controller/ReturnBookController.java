@@ -26,11 +26,10 @@ public class ReturnBookController {
 
 	@Autowired
 	private BooksService booksService;
-	
+
 	@Autowired
 	private RentService rentService;
 
-	
 	/**
 	 * 対象書籍を貸出リストに登録する
 	 *
@@ -44,19 +43,26 @@ public class ReturnBookController {
 	public String rentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
-		
 		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
-		
-		if (selectedRentBookInfo == null){
+
+		if (selectedRentBookInfo == null) {
 			model.addAttribute("errorMessage", "貸出しされていません。");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
-						
-		} else {		
+
+		} else {
 			rentService.deleteRentBook(bookId);
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
+		}
 
-	}
+		String rentBookDetailsInfo = booksService.getRentBookInfo(bookId);
+
+		if (rentBookDetailsInfo == null) {
+			model.addAttribute("bookStatus", "貸出可");
+
+		} else {
+			model.addAttribute("bookStatus", "貸出中");
+
+		}
+		return "details";
 	}
 }

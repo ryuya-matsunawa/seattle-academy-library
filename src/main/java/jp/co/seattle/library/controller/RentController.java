@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.co.seattle.library.dto.RentBookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentService;
-import jp.co.seattle.library.service.ThumbnailService;
 
 /**
  * Handles requests for the application home page.
@@ -30,9 +29,6 @@ public class RentController {
 	@Autowired
 	private RentService rentService;
 
-	@Autowired
-	private ThumbnailService thumbnailService;
-
 	/**
 	 * 対象書籍を貸出リストに登録する
 	 *
@@ -43,22 +39,30 @@ public class RentController {
 	 */
 	@Transactional
 	@RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-	public String deleteRentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+	public String rentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
-		
 		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
-		
-		if (!(selectedRentBookInfo == null)){
+
+		if (!(selectedRentBookInfo == null)) {
 			model.addAttribute("errorMessage", "貸し出し済みです");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
-						
-		} else {		
+
+		} else {
 			rentService.rentBook(bookId);
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
 
-	}
+		}
+
+		String rentBookDetailsInfo = booksService.getRentBookInfo(bookId);
+
+		if (rentBookDetailsInfo == null) {
+			model.addAttribute("bookStatus", "貸出可");
+
+		} else {
+			model.addAttribute("bookStatus", "貸出中");
+
+		}
+		return "details";
 	}
 }

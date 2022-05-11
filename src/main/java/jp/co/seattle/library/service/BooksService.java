@@ -56,6 +56,27 @@ public class BooksService {
 	}
 
 	/**
+	 * 書籍IDに紐づく書籍情報の貸出情報を取得(rentbook_idが対象書籍情報にあるかないか)
+	 *
+	 * @param bookId 書籍ID
+	 * @return 書籍情報
+	 */
+	public String getRentBookInfo(int bookId) {
+
+		// JSPに渡すデータを設定する
+		String sql = "SELECT rentbook_id FROM books LEFT OUTER JOIN rent on books.id = rent.id where books.id =" + bookId;
+
+		try {
+			String rentBookDetailsInfo = jdbcTemplate.queryForObject(sql, String.class);
+
+			return rentBookDetailsInfo;
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
 	 * 書籍IDに紐づく書籍詳細情報を引数なしで取得する
 	 *
 	 * @return 書籍情報
@@ -114,19 +135,18 @@ public class BooksService {
 
 	}
 
-
 	/**
 	 * 書籍を一括登録する
 	 *
 	 * @param bookInfo 書籍情報
 	 */
 	public void bulkregistBook(BookDetailsInfo bookInfo) {
-	
+
 		String sql = "INSERT INTO books (title,author,publisher,publish_date,isbn,explain,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
 				+ bookInfo.getPublishDate() + "','" + bookInfo.getIsbn() + "','" + bookInfo.getExplain() + "','"
 				+ bookInfo.getThumbnailName() + "','" + bookInfo.getThumbnailUrl() + "'," + "now()," + "now())";
-		
+
 		jdbcTemplate.update(sql);
 	}
 }
