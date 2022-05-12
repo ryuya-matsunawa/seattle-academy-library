@@ -19,21 +19,21 @@ import jp.co.seattle.library.service.UsersService;
 /**
  * アカウント作成コントローラー
  */
-@Controller //APIの入り口
+@Controller // APIの入り口
 public class AccountController {
-    final static Logger logger = LoggerFactory.getLogger(LoginController.class);
+	final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
-    private BooksService booksService;
-    @Autowired
-    private UsersService usersService;
+	@Autowired
+	private BooksService booksService;
+	@Autowired
+	private UsersService usersService;
 
-    @RequestMapping(value = "/newAccount", method = RequestMethod.GET) //value＝actionで指定したパラメータ
-    public String createAccount(Model model) {
-        return "createAccount";
-    }
+	@RequestMapping(value = "/newAccount", method = RequestMethod.GET) // value＝actionで指定したパラメータ
+	public String createAccount(Model model) {
+		return "createAccount";
+	}
 
-    /**
+	/**
      * 新規アカウント作成
      *
      * @param email メールアドレス
@@ -57,12 +57,22 @@ public class AccountController {
         userInfo.setEmail(email);
 
         // TODO バリデーションチェック、パスワード一致チェック実装
-
-        userInfo.setPassword(password);
-        usersService.registUser(userInfo);
-
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
+        if(password.length() >= 8 && password.matches("^[0-9a-zA-Z]+$")) {
+        	
+	        if(password.equals(passwordForCheck)) {
+	        	userInfo.setPassword(password);
+	            usersService.registUser(userInfo);	
+	            
+	            return "login";
+	        	
+	        } else {
+	        	model.addAttribute("errorMessage", "パスワードが一致しません");
+	        	return "createAccount";
+	        }
+        
+    	} else {
+	    	model.addAttribute("errorMessage", "パスワードは半角英数８文字以上に設定してください");
+	    	return "createAccount";
+    	}
     }
-
 }
