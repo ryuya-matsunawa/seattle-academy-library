@@ -19,50 +19,58 @@ import jp.co.seattle.library.service.UsersService;
 /**
  * アカウント作成コントローラー
  */
-@Controller //APIの入り口
+@Controller // APIの入り口
 public class AccountController {
-    final static Logger logger = LoggerFactory.getLogger(LoginController.class);
+	final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
-    private BooksService booksService;
-    @Autowired
-    private UsersService usersService;
+	@Autowired
+	private BooksService booksService;
+	@Autowired
+	private UsersService usersService;
 
-    @RequestMapping(value = "/newAccount", method = RequestMethod.GET) //value＝actionで指定したパラメータ
-    public String createAccount(Model model) {
-        return "createAccount";
-    }
+	@RequestMapping(value = "/newAccount", method = RequestMethod.GET) // value＝actionで指定したパラメータ
+	public String createAccount(Model model) {
+		return "createAccount";
+	}
 
-    /**
-     * 新規アカウント作成
-     *
-     * @param email メールアドレス
-     * @param password パスワード
-     * @param passwordForCheck 確認用パスワード
-     * @param model
-     * @return　ホーム画面に遷移
-     */
-    @Transactional
-    @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
-    public String createAccount(Locale locale,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam("passwordForCheck") String passwordForCheck,
-            Model model) {
-        // デバッグ用ログ
-        logger.info("Welcome createAccount! The client locale is {}.", locale);
+	/**
+	 * 新規アカウント作成
+	 *
+	 * @param email            メールアドレス
+	 * @param password         パスワード
+	 * @param passwordForCheck 確認用パスワード
+	 * @param model
+	 * @return ホーム画面に遷移
+	 */
+	@Transactional
+	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+	public String createAccount(Locale locale, @RequestParam("email") String email,
+			@RequestParam("password") String password, @RequestParam("passwordForCheck") String passwordForCheck,
+			Model model) {
+		// デバッグ用ログ
+		logger.info("Welcome createAccount! The client locale is {}.", locale);
 
-        // パラメータで受け取った書籍情報をDtoに格納する。
-        UserInfo userInfo = new UserInfo();
-        userInfo.setEmail(email);
+		// パラメータで受け取った書籍情報をDtoに格納する。
+		UserInfo userInfo = new UserInfo();
+		userInfo.setEmail(email);
 
-        // TODO バリデーションチェック、パスワード一致チェック実装
+		// TODO バリデーションチェック、パスワード一致チェック実装
+		boolean validPass = password.matches("^[a-zA-Z0-9]{8,}$");
 
-        userInfo.setPassword(password);
-        usersService.registUser(userInfo);
+		if (!validPass) {
+			model.addAttribute("validError", "パスワードは半角英数8文字以上");
+			return "createAccount";
+		}
 
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
-    }
+		if (!(password.equals(passwordForCheck))) {
+			model.addAttribute("passError", "パスワードが一致しません");
+			return "createAccount";
+		}
+
+		userInfo.setPassword(password);
+		usersService.registUser(userInfo);
+
+		return "login";
+	}
 
 }
