@@ -48,7 +48,6 @@ public class RentController {
 		
 		if (!(selectedRentBookInfo == null)){
 			model.addAttribute("errorMessage", "貸し出し済みです");
-			
 			return "details";
 						
 		} else {		
