@@ -54,4 +54,17 @@ public class RentService {
 		}
 
 	}
+	
+	/**
+	 * 貸出書籍情報から書籍情報を削除する
+	 *
+	 * @param bookId 書籍Id
+	 */
+	public void deleteRentBook(int bookId) {
+
+		String sql = "DELETE FROM rent WHERE id =" + bookId;
+
+		jdbcTemplate.update(sql);
+
+	}
 }

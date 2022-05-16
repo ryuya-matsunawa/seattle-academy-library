@@ -17,11 +17,12 @@ import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentService;
 
 /**
- * Handles requests for the application home page.
+ * 削除コントローラー
  */
+
 @Controller // APIの入り口
-public class RentController {
-	final static Logger logger = LoggerFactory.getLogger(RentController.class);
+public class ReturnBookController {
+	final static Logger logger = LoggerFactory.getLogger(ReturnBookController.class);
 
 	@Autowired
 	private BooksService booksService;
@@ -38,19 +39,19 @@ public class RentController {
 	 * @return 遷移先画面名
 	 */
 	@Transactional
-	@RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-	public String deleteRentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
+	@RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+	public String rentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
 
-		if (!(selectedRentBookInfo == null)) {
-			model.addAttribute("errorMessage", "貸し出し済みです");
+		if (selectedRentBookInfo == null) {
+			model.addAttribute("errorMessage", "貸出しされていません。");
 
 		} else {
-			rentService.rentBook(bookId);
+			rentService.deleteRentBook(bookId);
 
 		}
 			return "details";
