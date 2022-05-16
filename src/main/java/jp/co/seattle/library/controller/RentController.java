@@ -43,17 +43,16 @@ public class RentController {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-		
-		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
-		
-		if (!(selectedRentBookInfo == null)){
-			model.addAttribute("errorMessage", "貸し出し済みです");
-			return "details";
-						
-		} else {		
-			rentService.rentBook(bookId);
-			return "details";
 
-	}
+		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
+
+		if (!(selectedRentBookInfo == null)) {
+			model.addAttribute("errorMessage", "貸し出し済みです");
+
+		} else {
+			rentService.rentBook(bookId);
+
+		}
+			return "details";
 	}
 }
