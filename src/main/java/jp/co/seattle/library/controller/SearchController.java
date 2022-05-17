@@ -36,7 +36,7 @@ public class SearchController {
 		// デバッグ用ログ
 		logger.info("Welcome createAccount! The client locale is {}.", locale);
 		
-//		model.addAttribute("bookList", booksService.getSearchBooksList(title));
+		model.addAttribute("bookList", booksService.getSearchBooksList(title));
 		return "home";
 
 	}
