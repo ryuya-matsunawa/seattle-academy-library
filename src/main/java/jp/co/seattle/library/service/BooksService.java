@@ -149,4 +149,25 @@ public class BooksService {
 
 		jdbcTemplate.update(sql);
 	}
+	
+	/**
+	 * 入力された文字列が、タイトルに含まれている書籍情報を取得
+	 *
+	 * @return 検索書籍リスト
+	 */
+	public List<BookInfo> getSearchBooksList(String title) {
+		System.out.println(title);
+		System.out.println(title.length());
+
+		List<BookInfo> getedSearchBooksList = jdbcTemplate.query(
+				"SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title LIKE '%"+title+"%';",
+				new BookInfoRowMapper());
+	
+
+		return getedSearchBooksList;
+		
+		
+	}
+
+	
 }
