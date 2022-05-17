@@ -42,10 +42,13 @@ public class RentController {
 	public String rentBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+
 		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
 
 		if (!(selectedRentBookInfo == null)) {
 			model.addAttribute("errorMessage", "貸し出し済みです");
+
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		} else {
