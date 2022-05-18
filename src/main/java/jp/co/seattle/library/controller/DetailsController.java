@@ -41,14 +41,9 @@ public class DetailsController {
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		String rentBookDetailsInfo = booksService.getRentBookInfo(bookId);
+		
+		model.addAttribute("bookStatus", rentBookDetailsInfo);
 
-		if (rentBookDetailsInfo == null) {
-			model.addAttribute("bookStatus", "貸出可");
-
-		} else {
-			model.addAttribute("bookStatus", "貸出中");
-
-		}
 		return "details";
 	}
 }
