@@ -40,6 +40,7 @@ public class BooksService {
 
 	/**
 	 * 書籍IDに紐づく書籍詳細情報を取得する
+	 * 
 	 *
 	 * @param bookId 書籍ID
 	 * @return 書籍情報
@@ -64,16 +65,12 @@ public class BooksService {
 	public String getRentBookInfo(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "SELECT case WHEN rent.rentbook_id is null THEN '貸出可' ELSE '貸出中' END from books LEFT OUTER JOIN rent on books.id = rent.id where books.id =" + bookId;
 
-		try {
-			String rentBookDetailsInfo = jdbcTemplate.queryForObject(sql, String.class);
+		String sql = "SELECT case WHEN rent.rent_date is null THEN '貸出可' ELSE '貸出中' END from books LEFT OUTER JOIN rent on books.id = rent.id where books.id ="+ bookId;
 
-			return rentBookDetailsInfo;
+		String rentBookDetailsInfo = jdbcTemplate.queryForObject(sql, String.class);
 
-		} catch (Exception e) {
-			return null;
-		}
+		return rentBookDetailsInfo;
 	}
 
 	/**
@@ -149,7 +146,7 @@ public class BooksService {
 
 		jdbcTemplate.update(sql);
 	}
-	
+
 	/**
 	 * 入力された文字列が、タイトルに含まれている書籍情報を取得
 	 *
@@ -159,15 +156,24 @@ public class BooksService {
 		System.out.println(title);
 		System.out.println(title.length());
 
-		List<BookInfo> getedSearchBooksList = jdbcTemplate.query(
-				"SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title LIKE '%"+title+"%';",
-				new BookInfoRowMapper());
-	
+		List<BookInfo> getedSearchBooksList = jdbcTemplate
+				.query("SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title LIKE '%"
+						+ title + "%';", new BookInfoRowMapper());
 
 		return getedSearchBooksList;
-		
-		
+
 	}
 
-	
+	/**
+	 * booksテーブルに書籍の返却日を登録する
+	 *
+	 * @param bookInfo 書籍情報
+	 */
+	public void returnRegist(Integer bookId) {
+
+		String sql = "INSERT INTO books (return_date) VALUES(now()) WHERE id = " + bookId;
+
+		jdbcTemplate.update(sql);
+	}
+
 }

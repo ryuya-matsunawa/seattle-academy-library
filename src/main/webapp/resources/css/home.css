@@ -145,7 +145,7 @@ img.book_img {
 	font-size: 12px;
 }
 
-a.btn_add_book, a.btn_bulk_book, button.btn_addBook, button.btn_editBook,
+a.btn_add_book, a.btn_bulk_book, a.btn_book_log, button.btn_addBook, button.btn_editBook,
 	button.btn_deleteBook, button.btn_rentBook, button.btn_returnBook,
 	button.btn_bulkRegist, button.btn_searchBook {
 	display: inline-block;
@@ -202,6 +202,10 @@ button.btn_bulkRegist {
 
 a:hover, button:hover {
 	opacity: 0.5;
+}
+
+a.btn_book_log{
+	background-color:#ffc44d;
 }
 
 /* ここからaddbook */

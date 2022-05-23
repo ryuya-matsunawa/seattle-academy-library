@@ -19,7 +19,6 @@ import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.ThumbnailService;
 
-
 /**
  * Handles requests for the application home page.
  */

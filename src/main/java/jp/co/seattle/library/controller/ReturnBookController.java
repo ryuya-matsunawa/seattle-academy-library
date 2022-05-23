@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.seattle.library.dto.RentBookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentService;
 
@@ -47,7 +46,7 @@ public class ReturnBookController {
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 
-		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
+		String selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
 
 		if (selectedRentBookInfo == null) {
 			model.addAttribute("errorMessage", "貸出しされていません。");
@@ -55,7 +54,7 @@ public class ReturnBookController {
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		} else {
-			rentService.deleteRentBook(bookId);
+			rentService.returnBook(bookId);
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		}
 

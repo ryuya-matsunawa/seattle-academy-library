@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.seattle.library.dto.RentBookDetailsInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentService;
 
@@ -44,11 +43,10 @@ public class RentController {
 
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
-		RentBookDetailsInfo selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
+		String selectedRentBookInfo = rentService.selectRentBookInfo(bookId);
 
 		if (!(selectedRentBookInfo == null)) {
 			model.addAttribute("errorMessage", "貸し出し済みです");
-
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
 		} else {
@@ -60,6 +58,8 @@ public class RentController {
 		String rentBookDetailsInfo = booksService.getRentBookInfo(bookId);
 
 		model.addAttribute("bookStatus", rentBookDetailsInfo);
+		
+		System.out.println("ステータス：" + rentBookDetailsInfo);
 		
 		return "details";
 	}
